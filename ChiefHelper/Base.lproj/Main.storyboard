@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74q-0T-IDg">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74q-0T-IDg">
                                 <rect key="frame" x="252" y="190" width="46" height="30"/>
                                 <state key="normal" title="Next"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
@@ -52,14 +52,14 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="Ha0-oS-t4g"/>
                                 <exclude reference="tth-Kp-oNM"/>
+                                <exclude reference="Ha0-oS-t4g"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="Ha0-oS-t4g"/>
                                 <include reference="tth-Kp-oNM"/>
+                                <include reference="Ha0-oS-t4g"/>
                             </mask>
                         </variation>
                     </view>
