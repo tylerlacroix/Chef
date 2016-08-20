@@ -66,6 +66,7 @@ class CameraViewController: UIViewController {
             cir.recipes = recipes
             self.presentViewController(cir, animated: true, completion: {})
         })
+    }
     
     
     
