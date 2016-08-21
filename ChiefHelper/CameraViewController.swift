@@ -26,11 +26,16 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     var endLabel = UILabel()
     var rescanLabel = UILabel()
     var background = UILabel()
+    var background1 = UILabel()
+    var background2 = UILabel()
     //var backButton = UIImageView()
     var findingLabel = UILabel()
+    var startLabel = UILabel()
     var xLabel = UILabel()
     var loadBall = UILabel()
     var blurEffectView = UIVisualEffectView()
+    var logo = UIImageView()
+    var gear = UIImageView()
     var stage = 0
     
     @IBOutlet weak var overlayCamera: UIView!
@@ -117,9 +122,64 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
         newview.layer.addSublayer(previewLayer!)
         previewLayer?.frame = overlayCamera.bounds
         captureSession.startRunning()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
+        view.addSubview(blurEffectView)
+        
+        background1 = UILabel(frame: CGRectMake(0, 0, 1000, 1000))
+        background1.backgroundColor = UIColor (red:1.0, green:1.0, blue:1.0, alpha:1.0)
+        background1.alpha = 1.0
+        
+        background2 = UILabel(frame: CGRectMake(0, 0, 1000, 1000))
+        background2.backgroundColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
+        background2.alpha = 0.0
+        
+        view.addSubview(background1)
+        view.addSubview(background2)
+        
+        let logoImage = UIImage(named: "Logo.png")
+        logo = UIImageView(image: logoImage!)
+        logo.frame = CGRect(x: 67, y: 231, width: 240, height: 138)
+        logo.contentMode = UIViewContentMode.ScaleAspectFit
+        logo.tintColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
+        logo.alpha = 1.0
+        self.view.addSubview(logo)
+        
+        let gearImage = UIImage(named: "Gear.png")
+        gear = UIImageView(image: gearImage!)
+        gear.frame = CGRect(x: 317, y: 10, width: 45, height: 45)
+        gear.contentMode = UIViewContentMode.ScaleAspectFit
+        gear.tintColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
+        gear.alpha = 0.0
+        self.view.addSubview(gear)
+        
+        startLabel = UILabel(frame: CGRectMake(50, 500, 250, 60))
+        startLabel.backgroundColor = UIColor.clearColor()
+        startLabel.textAlignment = NSTextAlignment.Center
+        startLabel.text = "tap to start"
+        startLabel.font = UIFont(name: "AvenirNext-Regular", size: 40.0)
+        startLabel.textColor = UIColor.blackColor()
+        startLabel.sizeToFit()
+        startLabel.frame.origin.x = (385 - startLabel.frame.size.width)/2
+        startLabel.alpha = 0.0
+        
+        view.addSubview(startLabel)
+        
+        UIView.animateWithDuration(3.0, delay: 0.0, options: .CurveEaseOut, animations: {
+            self.background1.alpha = 0.0
+            self.background2.alpha = 0.5
+            self.startLabel.alpha = 0.6
+            self.logo.alpha = 0.3
+            self.gear.alpha = 0.3
+            }, completion: {_ in})
     }
     
     func handleTap(recognizer: UITapGestureRecognizer) {
+        
+        doneInt()
         
         if (stage == 0) {
             if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
@@ -429,6 +489,18 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func clear() {
         self.labels.removeAll()
+    }
+    
+    func doneInt() {
+        UIView.animateWithDuration(0.8, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.startLabel.alpha = 0.0
+            self.logo.alpha = 0.0
+            self.background1.alpha = 0.0
+            self.background2.alpha = 0.0
+            self.gear.alpha = 0.0
+            self.blurEffectView.alpha = 0.0
+            
+            }, completion: {_ in})
     }
 }
 
