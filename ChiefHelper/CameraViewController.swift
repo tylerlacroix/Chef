@@ -304,19 +304,6 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                     self.clear()
                 }
             }
-<<<<<<< Updated upstream
-            
-            getRecipes(list, callback: { recipes in
-                dispatch_async(dispatch_get_main_queue(),{
-                    self.cir.recipes = recipes
-                    self.addChildViewController(self.cir)
-                    self.view.addSubview(self.cir.view)
-                    self.cir.view.frame.size.height = self.view.frame.size.height-100
-                    //self.presentViewController(cir, animated: true, completion: {})
-                })
-            })
-=======
->>>>>>> Stashed changes
         }
         else {
             reset()
