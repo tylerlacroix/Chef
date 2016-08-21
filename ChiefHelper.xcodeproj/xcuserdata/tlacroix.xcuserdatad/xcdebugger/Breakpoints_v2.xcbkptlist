@@ -159,7 +159,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
             endingLineNumber = "107"
-            landmarkName = "touchesBegan(_:withEvent:)"
+            landmarkName = "beginSession()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
             endingLineNumber = "105"
-            landmarkName = "touchesBegan(_:withEvent:)"
+            landmarkName = "beginSession()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -119,21 +119,23 @@ class CameraViewController: UIViewController {
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 let image = UIImage(data: imageData)
                 
-                RecognizeImage(UIImagePNGRepresentation(image!)!)
+                RecognizeImage(UIImagePNGRepresentation(image!)!, callback: { string in
+                    self.createLabel(string)
+                    })
                 //UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
                 
-                self.createLabel()
+                
                 
             }
         }
     }
     
-    func createLabel() {
+    func createLabel(labelName: String) {
         
         let foodLabel = UILabel(frame: CGRectMake(280, 550, 100, 40))
         foodLabel.textAlignment = NSTextAlignment.Center
         foodLabel.backgroundColor = UIColor.orangeColor()
-        foodLabel.text = "Orange"
+        foodLabel.text = labelName
         foodLabel.font = UIFont(name: "AvenirNext-Regular", size: 20.0)
         foodLabel.textColor = UIColor.whiteColor()
         foodLabel.sizeToFit()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-func RecognizeImage(image: NSData) {
+func RecognizeImage(image: NSData, callback:(String) -> Void) {
     
     let urlString = "http://10.71.134.168:8888/load.php"
     var request = NSMutableURLRequest()
@@ -32,7 +32,7 @@ func RecognizeImage(image: NSData) {
     var dic = convertStringToDictionary(returnString!)
     var keys = dic?.sortedKeysByValue(>)
     print("\(keys!.first!) - \(dic![keys!.first!]!)")
-
+    callback(keys!.first!)
 }
 
 func convertStringToDictionary(text: String) -> [String:Float]? {
