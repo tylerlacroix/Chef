@@ -293,7 +293,9 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                     layout.invalidateLayout()
                     var cir = CollectionViewController(collectionViewLayout: layout)
                     cir.recipes = recipes
-                    self.presentViewController(cir, animated: true, completion: {})
+                    self.addChildViewController(cir)
+                    self.view.addSubview(cir.view)
+                    //self.presentViewController(cir, animated: true, completion: {})
                 })
             })
         }

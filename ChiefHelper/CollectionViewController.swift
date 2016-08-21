@@ -21,9 +21,11 @@ class CollectionViewController: UICollectionViewController {
     super.viewDidLoad()
     // Register cell classes
     collectionView!.registerNib(UINib(nibName: "CircularCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-    let imageView = UIImageView(image: UIImage(named: "bg-dark.jpg"))
-    imageView.contentMode = UIViewContentMode.ScaleAspectFill
-    collectionView!.backgroundView = imageView
+    //let imageView = UIImageView(image: UIImage(named: "bg-dark.jpg"))
+    //imageView.contentMode = UIViewContentMode.ScaleAspectFill
+    //collectionView!.backgroundView = imageView
+    collectionView!.backgroundColor = UIColor.clearColor()
+    collectionView!.backgroundView = UIView(frame: CGRect.zero)
     
   }
     
