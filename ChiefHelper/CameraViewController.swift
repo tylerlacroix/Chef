@@ -16,7 +16,7 @@ class CameraViewController: UIViewController {
     var endButton = UIButton()
     var endLabel = UILabel()
     var background = UILabel()
-    var backButton = UIImageView()
+    //var backButton = UIImageView()
     var findingLabel = UILabel()
     var xLabel = UILabel()
     var loadBall = UILabel()
@@ -56,11 +56,11 @@ class CameraViewController: UIViewController {
             }
         }
         
-        let backImage = UIImage(named: "Back.png")
+        /*let backImage = UIImage(named: "Back.png")
         backButton = UIImageView(frame: CGRect(x: -35, y: -20, width: 140, height: 100))
         backButton.image = backImage
         backButton.alpha = 0.6
-        self.view.addSubview(backButton)
+        self.view.addSubview(backButton)*/
 
     }
     
@@ -145,6 +145,7 @@ class CameraViewController: UIViewController {
         foodLabel.layer.borderWidth = 3.0;
         foodLabel.layer.cornerRadius = 4
         foodLabel.layer.masksToBounds = true
+        foodLabel.frame.origin.x = 360-foodLabel.frame.size.width
         foodLabel.alpha = 0.0
         
         self.labels.append(foodLabel)
@@ -153,7 +154,7 @@ class CameraViewController: UIViewController {
         
         UIView.animateWithDuration(2.5, delay: 0.0, options: .CurveEaseOut, animations: {
             var foodLabelFrame = self.labels[self.labels.endIndex - 1].frame
-            foodLabelFrame.origin.y -= CGFloat(540 - ((self.labels.endIndex - 1)*50))
+            foodLabelFrame.origin.y -= CGFloat(490 - ((self.labels.endIndex - 1)*65))
             
             self.labels[self.labels.endIndex - 1].frame = foodLabelFrame
             }, completion: {_ in})
@@ -240,7 +241,7 @@ class CameraViewController: UIViewController {
         
         UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.endLabel.alpha = 0.0
-            self.backButton.alpha = 0.0
+            //self.backButton.alpha = 0.0
             
             }, completion: nil)
         
@@ -260,9 +261,9 @@ class CameraViewController: UIViewController {
             }, completion: nil)
         
         for i in 0...(self.labels.endIndex - 1) {
-            UIView.animateWithDuration(1.0, delay: (Double(i)*0.2), options: .CurveEaseOut, animations: {
+            UIView.animateWithDuration(0.8, delay: (Double(i)*0.1), options: .CurveEaseInOut, animations: {
                 var foodLabelFrame = self.labels[i].frame
-                foodLabelFrame.origin.x -= 125
+                foodLabelFrame.origin.x = 185 - self.labels[i].frame.size.width/2
                 
                 self.labels[i].frame = foodLabelFrame
                 }, completion: {_ in})
