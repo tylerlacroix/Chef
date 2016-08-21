@@ -10,12 +10,13 @@ import UIKit
 import AVFoundation
 
 let knownFoodItems = [
-    "bell pepper": "bell pepper",
+    "bell pepper": "tomato",
+    //"ping-pong ball": "tomato",
     "Granny Smith": "apple",
-    "banana": "banana",
-    "drumstick": "carrot",
-    "matchstick": "carrot"
-    
+    "chambered nautilus, pearly nautilus, nautilus": "onion",
+    "dugong, Dugong dugon": "cucumber",
+    "Windsor tie": "cucumber",
+    "nematode, nematode worm, roundworm": "cucumber"
 ]
 
 class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
@@ -43,7 +44,9 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     lazy var cir: CollectionViewController = {
         var layout = CircularCollectionViewLayout()
         layout.invalidateLayout()
-        return CollectionViewController(collectionViewLayout: layout)
+        var collection = CollectionViewController(collectionViewLayout: layout)
+        collection.parent = self
+        return collection
     }()
 
     override func viewDidLoad() {
@@ -298,7 +301,8 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                         self.findingLabel.alpha = 0.0
                         
                         for i in 0...(self.labels.endIndex - 1) {
-                            self.labels[i].alpha = 0.0
+                            //self.labels[i].alpha = 0.0
+                            self.labels[i].frame.origin.y -= CGFloat(20*(i+1))
                         }
                         
                         UIView.animateWithDuration(0.6, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
@@ -324,7 +328,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                         }, completion: nil)
                     
                     self.showRecipes()
-                    self.clear()
+                    //self.clear()
                 }
             }
             
@@ -357,7 +361,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.cir.recipes = recipes
                 self.addChildViewController(self.cir)
                 self.view.addSubview(self.cir.view)
-                self.cir.view.frame.size.height -= 100
+                self.cir.view.frame.size.height = self.view.frame.height-100
                 self.cir.view.alpha = 0.0
                 
                 UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
@@ -429,6 +433,21 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func clear() {
         self.labels.removeAll()
+    }
+    
+    func recipeUses(uses: [String]) {
+        for label in labels {
+            label.alpha = 0.3
+            //label.backgroundColor = UIColor.orangeColor()
+        }
+        for item in uses {
+            for label in labels {
+                if label.text == item {
+                    label.alpha = 1.0
+                    //label.backgroundColor = UIColor.greenColor()()
+                }
+            }
+        }
     }
 }
 

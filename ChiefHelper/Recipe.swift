@@ -13,11 +13,13 @@ class Recipe: NSObject {
     public var title: String
     public var imgURL: String
     public var URL: String
+    public var uses: [String]
     
-    init(id: String, title: String, imgURL: String, URL: String) {
+    init(id: String, title: String, imgURL: String, URL: String, uses: [String]) {
         self.id = id
         self.title = title
         self.imgURL = imgURL
         self.URL = URL
+        self.uses = uses
     }
 }
