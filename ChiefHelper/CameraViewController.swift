@@ -12,7 +12,9 @@ import AVFoundation
 let knownFoodItems = [
     "bell pepper": "bell pepper",
     "Granny Smith": "apple",
-    "banana": "banana"
+    "banana": "banana",
+    "drumstick": "carrot",
+    "matchstick": "carrot"
     
 ]
 
@@ -22,6 +24,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     let stillImageOutput = AVCaptureStillImageOutput()
     var endButton = UIButton()
     var endLabel = UILabel()
+    var rescanLabel = UILabel()
     var background = UILabel()
     //var backButton = UIImageView()
     var findingLabel = UILabel()
@@ -194,7 +197,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
         endLabel = UILabel(frame: CGRectMake(65, 580, 250, 60))
         endLabel.backgroundColor = UIColor.clearColor()
         endLabel.textAlignment = NSTextAlignment.Center
-        endLabel.text = "Make a meal"
+        endLabel.text = "make a meal"
         endLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
         endLabel.textColor = UIColor.whiteColor()
         endLabel.alpha = 0.0
@@ -298,12 +301,42 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                             self.labels[i].alpha = 0.0
                         }
                         
+                        UIView.animateWithDuration(0.6, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                            self.endButton.frame.size.width = 150
+                            self.endButton.frame.origin.x -= (150 - 60)/2
+                            
+                            
+                            }, completion: nil)
+                        
+                        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                        
+                            self.loadBall.alpha = 0.0
+                            self.xLabel.alpha = 0.0
+                            
+                            }, completion: nil)
+                        
+                        UIView.animateWithDuration(0.4, delay: 0.4, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                            
+                            self.rescanLabel.alpha = 0.8
+                            
+                            }, completion: nil)
+                        
                         }, completion: nil)
                     
                     self.showRecipes()
                     self.clear()
                 }
             }
+            
+            rescanLabel = UILabel(frame: CGRectMake(65, 580, 250, 60))
+            rescanLabel.backgroundColor = UIColor.clearColor()
+            rescanLabel.textAlignment = NSTextAlignment.Center
+            rescanLabel.text = "rescan"
+            rescanLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
+            rescanLabel.textColor = UIColor.whiteColor()
+            rescanLabel.alpha = 0.0
+            
+            self.view.addSubview(rescanLabel)
         }
         else {
             reset()
@@ -378,6 +411,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
             self.xLabel.alpha = 0.0
             self.loadBall.alpha = 0.0
             self.blurEffectView.alpha = 0.0
+            self.rescanLabel.alpha = 0.0
             self.stage = 0
             
             self.cir.view.removeFromSuperview()
