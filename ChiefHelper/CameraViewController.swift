@@ -36,6 +36,12 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     var previewLayer : AVCaptureVideoPreviewLayer?
     var labels = [UILabel]()
     var newview = UIView()
+    
+    lazy var cir: CollectionViewController = {
+        var layout = CircularCollectionViewLayout()
+        layout.invalidateLayout()
+        return CollectionViewController(collectionViewLayout: layout)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -287,14 +293,11 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             
             getRecipes(list, callback: { recipes in
-                
                 dispatch_async(dispatch_get_main_queue(),{
-                    var layout = CircularCollectionViewLayout()
-                    layout.invalidateLayout()
-                    var cir = CollectionViewController(collectionViewLayout: layout)
-                    cir.recipes = recipes
-                    self.addChildViewController(cir)
-                    self.view.addSubview(cir.view)
+                    self.cir.recipes = recipes
+                    self.addChildViewController(self.cir)
+                    self.view.addSubview(self.cir.view)
+                    self.cir.view.frame.size.height -= 100
                     //self.presentViewController(cir, animated: true, completion: {})
                 })
             })
@@ -346,6 +349,9 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
             self.loadBall.alpha = 0.0
             self.blurEffectView.alpha = 0.0
             self.stage = 0
+            
+            self.cir.view.removeFromSuperview()
+            self.cir.removeFromParentViewController()
             
             for i in 0...(self.labels.endIndex - 1) {
                 self.labels[i].alpha = 0.0
