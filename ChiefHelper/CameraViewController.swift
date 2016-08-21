@@ -16,7 +16,7 @@ let knownFoodItems = [
     
 ]
 
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let captureSession = AVCaptureSession()
     let stillImageOutput = AVCaptureStillImageOutput()
@@ -46,6 +46,10 @@ class CameraViewController: UIViewController {
         if captureSession.canAddOutput(stillImageOutput) {
             captureSession.addOutput(stillImageOutput)
         }
+        
+        let recognizer = UITapGestureRecognizer(target: self, action:Selector("handleTap:"))
+        recognizer.delegate = self
+        view.addGestureRecognizer(recognizer)
     
         let devices = AVCaptureDevice.devices()
         
@@ -80,19 +84,6 @@ class CameraViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func Next(sender: AnyObject) {
-        
-        getRecipes(["chicken breast", "bell pepper"], callback: { recipes in
-            var layout = CircularCollectionViewLayout()
-            layout.invalidateLayout()
-            var cir = CollectionViewController(collectionViewLayout: layout)
-            cir.recipes = recipes
-            self.presentViewController(cir, animated: true, completion: {})
-        })
-    }
-    
-    
     
     func beginSession() {
         
@@ -119,7 +110,7 @@ class CameraViewController: UIViewController {
         captureSession.startRunning()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    func handleTap(recognizer: UITapGestureRecognizer) {
         
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
@@ -211,81 +202,100 @@ class CameraViewController: UIViewController {
     func backButtonTapped() {
         if (stage == 0) {
             
-        stage = 1
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
-        view.addSubview(blurEffectView)
-        
-        self.view.insertSubview(blurEffectView, atIndex: 1)
-        
-        background = UILabel(frame: CGRectMake(0, 0, 1000, 1000))
-        background.backgroundColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
-        background.alpha = 0.0
-        
-        self.view.insertSubview(background, atIndex: 2)
-        
-        findingLabel = UILabel(frame: CGRectMake(50, 520, 250, 60))
-        findingLabel.backgroundColor = UIColor.clearColor()
-        findingLabel.textAlignment = NSTextAlignment.Center
-        findingLabel.text = "Finding available recipes"
-        findingLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
-        findingLabel.textColor = UIColor.blackColor()
-        findingLabel.sizeToFit()
-        findingLabel.alpha = 0.0
-        
-        self.view.addSubview(findingLabel)
-        
-        xLabel = UILabel(frame: CGRectMake(174, 574, 250, 60))
-        xLabel.text = "x"
-        xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 60.0)
-        xLabel.textColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
-        xLabel.alpha = 0.0
-        
-        self.view.addSubview(xLabel)
-        
-        loadBall = UILabel(frame: CGRectMake(185, 605, 10, 10))
-        loadBall.backgroundColor = UIColor.redColor()
-        loadBall.layer.borderColor = UIColor.redColor().CGColor
-        loadBall.layer.borderWidth = 3.0;
-        loadBall.layer.masksToBounds = true
-        loadBall.layer.cornerRadius = 5
-        loadBall.alpha = 0.0
-        
-        self.view.addSubview(loadBall)
-        
-        UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.endLabel.alpha = 0.0
-            //self.backButton.alpha = 0.0
+            stage = 1
+            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+            blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = view.bounds
+            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
+            view.addSubview(blurEffectView)
             
-            }, completion: nil)
-        
-        UIView.animateWithDuration(0.7, delay: 0.6, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.xLabel.alpha = 1.0
+            self.view.insertSubview(blurEffectView, atIndex: 1)
             
-            }, completion: nil)
-        
-        UIView.animateWithDuration(0.6, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.background.alpha = 0.5
-            self.endButton.frame.size.width = 60
-            self.endButton.frame.origin.x += (250 - 60)/2
+            background = UILabel(frame: CGRectMake(0, 0, 1000, 1000))
+            background.backgroundColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
+            background.alpha = 0.0
             
-            self.findingLabel.alpha = 0.8
-            self.loadBall.alpha = 0.6
+            self.view.insertSubview(background, atIndex: 2)
             
-            }, completion: nil)
-        
-        for i in 0...(self.labels.endIndex - 1) {
-            UIView.animateWithDuration(0.8, delay: (Double(i)*0.1), options: .CurveEaseInOut, animations: {
-                var foodLabelFrame = self.labels[i].frame
-                foodLabelFrame.origin.x = 185 - self.labels[i].frame.size.width/2
+            findingLabel = UILabel(frame: CGRectMake(50, 520, 250, 60))
+            findingLabel.backgroundColor = UIColor.clearColor()
+            findingLabel.textAlignment = NSTextAlignment.Center
+            findingLabel.text = "Finding available recipes"
+            findingLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
+            findingLabel.textColor = UIColor.blackColor()
+            findingLabel.sizeToFit()
+            findingLabel.alpha = 0.0
+            
+            self.view.addSubview(findingLabel)
+            
+            xLabel = UILabel(frame: CGRectMake(174, 574, 250, 60))
+            xLabel.text = "x"
+            xLabel.font = UIFont(name: "ArialRoundedMTBold", size: 60.0)
+            xLabel.textColor = UIColor (red:1.00, green:0.93, blue:0.75, alpha:1.0)
+            xLabel.alpha = 0.0
+            
+            self.view.addSubview(xLabel)
+            
+            loadBall = UILabel(frame: CGRectMake(185, 605, 10, 10))
+            loadBall.backgroundColor = UIColor.redColor()
+            loadBall.layer.borderColor = UIColor.redColor().CGColor
+            loadBall.layer.borderWidth = 3.0;
+            loadBall.layer.masksToBounds = true
+            loadBall.layer.cornerRadius = 5
+            loadBall.alpha = 0.0
+            
+            self.view.addSubview(loadBall)
+            
+            UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.endLabel.alpha = 0.0
+                //self.backButton.alpha = 0.0
                 
-                self.labels[i].frame = foodLabelFrame
-                }, completion: {_ in})
-        }
+                }, completion: nil)
+            
+            UIView.animateWithDuration(0.7, delay: 0.6, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.xLabel.alpha = 1.0
+                
+                }, completion: nil)
+            
+            UIView.animateWithDuration(0.6, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.background.alpha = 0.5
+                self.endButton.frame.size.width = 60
+                self.endButton.frame.origin.x += (250 - 60)/2
+                
+                self.findingLabel.alpha = 0.8
+                self.loadBall.alpha = 0.6
+                
+                }, completion: nil)
         
-        rotateView(loadBall)
+            for i in 0...(self.labels.endIndex - 1) {
+                UIView.animateWithDuration(0.8, delay: (Double(i)*0.1), options: .CurveEaseInOut, animations: {
+                    var foodLabelFrame = self.labels[i].frame
+                    foodLabelFrame.origin.x = 185 - self.labels[i].frame.size.width/2
+                    
+                    self.labels[i].frame = foodLabelFrame
+                    }, completion: {_ in})
+            }
+            
+            rotateView(loadBall)
+            
+            var list = [String]()
+            
+            for label in labels {
+                if let text = label.text {
+                    list.append(text)
+                }
+            }
+            
+            getRecipes(list, callback: { recipes in
+                
+                dispatch_async(dispatch_get_main_queue(),{
+                    var layout = CircularCollectionViewLayout()
+                    layout.invalidateLayout()
+                    var cir = CollectionViewController(collectionViewLayout: layout)
+                    cir.recipes = recipes
+                    self.presentViewController(cir, animated: true, completion: {})
+                })
+            })
         }
         else {
             reset()

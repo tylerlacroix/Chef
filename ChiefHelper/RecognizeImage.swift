@@ -25,22 +25,27 @@ func RecognizeImage(image: NSData, callback:(String?) -> Void) {
     body.appendData("\r\n--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
     
     request.HTTPBody = body
-    var returnData = try! NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
-    var returnString = String(data: returnData, encoding: NSUTF8StringEncoding)
-    //print("Image Return String: \(returnString)")
-    
-    var dic = convertStringToDictionary(returnString!)
-    var keys = (dic?.sortedKeysByValue(>))!
-    for i in 0...5 {
-        if dic![keys.first!]! > 0.1 {
-            if let val = knownFoodItems[keys[i]] {
-                callback(val)
-                return
+    do {
+        let returnData = try NSURLConnection.sendSynchronousRequest(request, returningResponse: nil)
+        var returnString = String(data: returnData, encoding: NSUTF8StringEncoding)
+        //print("Image Return String: \(returnString)")
+        
+        var dic = convertStringToDictionary(returnString!)
+        var keys = (dic?.sortedKeysByValue(>))!
+        for i in 0...5 {
+            if dic![keys.first!]! > 0.1 {
+                if let val = knownFoodItems[keys[i]] {
+                    callback(val)
+                    return
+                }
             }
         }
+        print("\(keys.first!) - \(dic![keys.first!]!)")
+        callback(nil)
+    } catch {
+        return
     }
-    print("\(keys.first!) - \(dic![keys.first!]!)")
-    callback(nil)
+    
 }
 
 func convertStringToDictionary(text: String) -> [String:Float]? {
