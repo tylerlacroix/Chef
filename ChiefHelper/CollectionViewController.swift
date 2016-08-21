@@ -17,7 +17,7 @@ class CollectionViewController: UICollectionViewController {
     var recipes = [Recipe]()
     var titleLabel: UILabel!
     var pageWidth: Float {
-        return Float((self.collectionView!.contentSize.width-375)/CGFloat(recipes.count-1 vhi))
+        return Float((self.collectionView!.contentSize.width-375)/CGFloat(recipes.count-1))
     }
   
   override func viewDidLoad() {
