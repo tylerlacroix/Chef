@@ -32,8 +32,9 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        captureSession.sessionPreset = AVCaptureSessionPresetHigh
+        captureSession.sessionPreset = AVCaptureSessionPreset640x480
         stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+        
         if captureSession.canAddOutput(stillImageOutput) {
             captureSession.addOutput(stillImageOutput)
         }
@@ -116,6 +117,9 @@ class CameraViewController: UIViewController {
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                let image = UIImage(data: imageData)
+                
+                RecognizeImage(UIImagePNGRepresentation(image!)!)
                 //UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
                 
                 self.createLabel()
