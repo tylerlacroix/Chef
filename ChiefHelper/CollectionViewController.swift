@@ -17,16 +17,13 @@ class CollectionViewController: UICollectionViewController {
     var recipes = [Recipe]()
     var titleLabel: UILabel!
     var pageWidth: Float {
-        return Float(self.collectionView!.contentSize.width/CGFloat(recipes.count+1))
+        return Float((self.collectionView!.contentSize.width-375)/CGFloat(recipes.count-1))
     }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Register cell classes
+    
     collectionView!.registerNib(UINib(nibName: "CircularCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-    //let imageView = UIImageView(image: UIImage(named: "bg-dark.jpg"))
-    //imageView.contentMode = UIViewContentMode.ScaleAspectFill
-    //collectionView!.backgroundView = imageView
     collectionView!.backgroundColor = UIColor.clearColor()
     collectionView!.backgroundView = UIView(frame: CGRect.zero)
     
@@ -39,6 +36,7 @@ class CollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(animated: Bool) {
         titleLabel.text = recipes[0].title
+        collectionView?.reloadData()
         self.view.addSubview(titleLabel)
         self.view.bringSubviewToFront(titleLabel)
     }
