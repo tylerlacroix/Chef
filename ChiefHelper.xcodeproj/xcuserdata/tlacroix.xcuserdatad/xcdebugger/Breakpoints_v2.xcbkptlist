@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "14"
             endingLineNumber = "14"
-            landmarkName = "RecognizeImage(_:)"
+            landmarkName = "RecognizeImage(_:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
             endingLineNumber = "32"
-            landmarkName = "RecognizeImage(_:)"
+            landmarkName = "RecognizeImage(_:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -239,7 +239,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
             endingLineNumber = "36"
-            landmarkName = "RecognizeImage(_:)"
+            landmarkName = "RecognizeImage(_:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

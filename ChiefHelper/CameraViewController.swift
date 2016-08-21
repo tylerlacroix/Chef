@@ -9,6 +9,13 @@
 import UIKit
 import AVFoundation
 
+let knownFoodItems = [
+    "bell pepper": "bell pepper",
+    "Granny Smith": "apple",
+    "banana": "banana"
+    
+]
+
 class CameraViewController: UIViewController {
     
     let captureSession = AVCaptureSession()
@@ -120,12 +127,11 @@ class CameraViewController: UIViewController {
                 let image = UIImage(data: imageData)
                 
                 RecognizeImage(UIImagePNGRepresentation(image!)!, callback: { string in
-                    self.createLabel(string)
+                    if let foodname = string {
+                        self.createLabel(foodname)
+                    }
                     })
                 //UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
-                
-                
-                
             }
         }
     }
