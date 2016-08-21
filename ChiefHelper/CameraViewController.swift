@@ -27,9 +27,10 @@ class CameraViewController: UIViewController {
     var findingLabel = UILabel()
     var xLabel = UILabel()
     var loadBall = UILabel()
+    var blurEffectView = UIVisualEffectView()
+    var stage = 0
     
     @IBOutlet weak var overlayCamera: UIView!
-    
     
     var captureDevice : AVCaptureDevice?
     var previewLayer : AVCaptureVideoPreviewLayer?
@@ -153,8 +154,14 @@ class CameraViewController: UIViewController {
         foodLabel.layer.masksToBounds = true
         foodLabel.frame.origin.x = 360-foodLabel.frame.size.width
         foodLabel.alpha = 0.0
+        foodLabel.userInteractionEnabled = true
+        
+        var leftSwipe = UISwipeGestureRecognizer(target: self, action: "deleteFood:")
+        leftSwipe.direction = .Left
+        foodLabel.addGestureRecognizer(leftSwipe)
         
         self.labels.append(foodLabel)
+        self.labels[self.labels.endIndex - 1].tag = self.labels.endIndex - 1
         
         self.view.addSubview(foodLabel)
         
@@ -202,8 +209,11 @@ class CameraViewController: UIViewController {
     }
     
     func backButtonTapped() {
+        if (stage == 0) {
+            
+        stage = 1
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
         view.addSubview(blurEffectView)
@@ -245,13 +255,13 @@ class CameraViewController: UIViewController {
         
         self.view.addSubview(loadBall)
         
-        UIView.animateWithDuration(0.7, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animateWithDuration(0.4, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.endLabel.alpha = 0.0
             //self.backButton.alpha = 0.0
             
             }, completion: nil)
         
-        UIView.animateWithDuration(0.7, delay: 0.7, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animateWithDuration(0.7, delay: 0.6, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.xLabel.alpha = 1.0
             
             }, completion: nil)
@@ -276,6 +286,10 @@ class CameraViewController: UIViewController {
         }
         
         rotateView(loadBall)
+        }
+        else {
+            reset()
+        }
     }
     
     func rotateView(sender: UILabel) {
@@ -287,6 +301,52 @@ class CameraViewController: UIViewController {
         }) { (finished) -> Void in
             self.rotateView(sender)
         }
+    }
+    
+    func deleteFood(sender: UISwipeGestureRecognizer) {
+        var senderlaber = sender.view as! UILabel
+        UIView.animateWithDuration(0.8, delay: 0.0, options: .CurveEaseInOut, animations: {
+            var foodLabelFrame = self.labels[self.labels.indexOf(senderlaber)!].frame
+            foodLabelFrame.origin.x = 0 - self.labels[self.labels.indexOf(senderlaber)!].frame.size.width
+            
+            self.labels[self.labels.indexOf(senderlaber)!].frame = foodLabelFrame
+            
+            if ((self.labels.indexOf(senderlaber))!+1 <= (self.labels.endIndex - 1)) {
+                for i in (self.labels.indexOf(senderlaber))!+1...(self.labels.endIndex - 1) {
+                    self.labels[i].frame.origin.y -= 65
+                }
+            }
+            
+            }, completion: {_ in})
+        
+        self.labels.removeAtIndex(self.labels.indexOf(senderlaber)!)
+    }
+    
+    func reset() {
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.endButton.alpha = 0.0
+            self.endLabel.alpha = 0.0
+            self.background.alpha = 0.0
+            //self.backButton.alpha = 0.0
+            self.findingLabel.alpha = 0.0
+            self.xLabel.alpha = 0.0
+            self.loadBall.alpha = 0.0
+            self.blurEffectView.alpha = 0.0
+            self.stage = 0
+            
+            for i in 0...(self.labels.endIndex - 1) {
+                self.labels[i].alpha = 0.0
+            }
+            
+            }, completion: { Void in
+                self.clear()
+        })
+        
+    }
+    
+    func clear() {
+        self.labels.removeAll()
     }
 }
 
