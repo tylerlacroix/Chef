@@ -27,12 +27,16 @@ class CollectionViewController: UICollectionViewController, UIGestureRecognizerD
     collectionView!.registerNib(UINib(nibName: "CircularCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
     collectionView!.backgroundColor = UIColor.clearColor()
     collectionView!.backgroundView = UIView(frame: CGRect.zero)
+    collectionView!.showsVerticalScrollIndicator = false
+    collectionView!.showsHorizontalScrollIndicator = false
     
-    titleLabel = UILabel(frame: CGRectMake(0, 0, view.frame.width-40, 80))
-    titleLabel.center = CGPointMake(view.frame.width/2, 384)
+    titleLabel = UILabel(frame: CGRectMake(0, 0, view.frame.width-40, 150))
+    titleLabel.center = CGPointMake(view.frame.width/2, 424)
     titleLabel.textAlignment = NSTextAlignment.Center
     titleLabel.textColor = UIColor.blackColor()
     titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
+    titleLabel.lineBreakMode = .ByWordWrapping
+    titleLabel.numberOfLines = 0
     
     let recognizer = UITapGestureRecognizer(target: self, action:Selector("handleTap:"))
     recognizer.delegate = self
