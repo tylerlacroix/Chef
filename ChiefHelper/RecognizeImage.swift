@@ -32,13 +32,31 @@ func RecognizeImage(image: NSData, callback:(String?) -> Void) {
         
         var dic = convertStringToDictionary(returnString!)
         var keys = (dic?.sortedKeysByValue(>))!
+        
         for i in 0...5 {
-            if dic![keys.first!]! > 0.1 {
+                print("\(keys[i]) - \(dic![keys[i]]!)")
+        }
+        
+        var round = false
+        for i in 0...5 {
+            if dic![keys[i]]! > 0.1 {
+                if keys[i] == "ping-pong ball" {
+                    round = true
+                }
+                
                 if let val = knownFoodItems[keys[i]] {
                     callback(val)
                     return
                 }
             }
+            if keys[i] == "pick, plectrum, plectron" {
+                callback("onion")
+                return
+            }
+        }
+        if round {
+            callback("tomato")
+            return
         }
         print("\(keys.first!) - \(dic![keys.first!]!)")
         callback(nil)

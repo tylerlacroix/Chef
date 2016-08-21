@@ -44,7 +44,11 @@ extension NSMutableURLRequest {
     }
 }
 
-func getRecipes(food:[String], callback:([Recipe]) -> Void) {
+func getRecipes(food_:[String], callback:([Recipe]) -> Void) {
+    var food = food_
+    if food.contains("tomato") && food.contains("onion") && food.contains("cucumber") {
+        food.append("mayonnaise")
+    }
     let config = NSURLSessionConfiguration.defaultSessionConfiguration()
     config.HTTPAdditionalHeaders = [
         "Accept" : "application/json",
@@ -64,10 +68,10 @@ func getRecipes(food:[String], callback:([Recipe]) -> Void) {
         let json = JSON(data: data!)
         var recipes = [Recipe]()
         for recipe in json["results"] {
-            if let title = recipe.1["title"].string, url = recipe.1["url"].string, needsArray = recipe.1["needs"].array {
+            if let title = recipe.1["title"].string, url = recipe.1["url"].string, uses = recipe.1["uses"].string, needsArray = recipe.1["needs"].array {
                 let idString = "\(recipe.1["id"].intValue)"
                 if needsArray.count == 0 {
-                    recipes.append(Recipe(id: idString, title: title, imgURL: "http://www.supercook.com/thumbs/\(idString).jpg", URL: url))
+                    recipes.append(Recipe(id: idString, title: title, imgURL: "http://www.supercook.com/thumbs/\(idString).jpg", URL: url, uses: uses.componentsSeparatedByString(", ")))
                 }
             }
         }

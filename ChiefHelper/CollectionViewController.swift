@@ -13,6 +13,8 @@ import SafariServices
 let reuseIdentifier = "Cell"
 
 class CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate, SFSafariViewControllerDelegate {
+    
+    public weak var parent: CameraViewController!
   
   //let images: [String] = NSBundle.mainBundle().pathsForResourcesOfType("png", inDirectory: "Images")
     var recipes = [Recipe]()
@@ -31,7 +33,7 @@ class CollectionViewController: UICollectionViewController, UIGestureRecognizerD
     collectionView!.showsHorizontalScrollIndicator = false
     
     titleLabel = UILabel(frame: CGRectMake(0, 0, view.frame.width-40, 150))
-    titleLabel.center = CGPointMake(view.frame.width/2, 424)
+    titleLabel.center = CGPointMake(view.frame.width/2, 474)
     titleLabel.textAlignment = NSTextAlignment.Center
     titleLabel.textColor = UIColor.blackColor()
     titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
@@ -54,9 +56,11 @@ class CollectionViewController: UICollectionViewController, UIGestureRecognizerD
     
     override func viewWillAppear(animated: Bool) {
         titleLabel.text = recipes[0].title
+        parent.recipeUses(recipes[0].uses)
         collectionView?.reloadData()
         self.view.addSubview(titleLabel)
         self.view.bringSubviewToFront(titleLabel)
+        collectionView?.contentOffset.x = 0
     }
   
     override func collectionView(collectionView: UICollectionView,
@@ -73,7 +77,9 @@ class CollectionViewController: UICollectionViewController, UIGestureRecognizerD
     
     override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         print("\(scrollView.contentOffset.x/CGFloat(pageWidth)) to \(Int(scrollView.contentOffset.x)/Int(pageWidth))")
-        titleLabel.text = recipes[Int(scrollView.contentOffset.x)/Int(pageWidth)].title
+        let i = Int(scrollView.contentOffset.x)/Int(pageWidth)
+        titleLabel.text = recipes[i].title
+        parent.recipeUses(recipes[i].uses)
     }
     
     func safariViewControllerDidFinish(controller: SFSafariViewController) {

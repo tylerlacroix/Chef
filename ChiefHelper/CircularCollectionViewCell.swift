@@ -37,7 +37,7 @@ class CircularCollectionViewCell: UICollectionViewCell {
     super.applyLayoutAttributes(layoutAttributes)
     let circularlayoutAttributes = layoutAttributes as! CircularCollectionViewLayoutAttributes
     self.layer.anchorPoint = circularlayoutAttributes.anchorPoint
-    self.center.y += (circularlayoutAttributes.anchorPoint.y - 0.5)*CGRectGetHeight(self.bounds)-60
+    self.center.y += (circularlayoutAttributes.anchorPoint.y - 0.5)*CGRectGetHeight(self.bounds)+20
   }
   
 }
