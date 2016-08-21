@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import SafariServices
 
 
 let reuseIdentifier = "Cell"
 
-class CollectionViewController: UICollectionViewController {
+class CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate, SFSafariViewControllerDelegate {
   
   //let images: [String] = NSBundle.mainBundle().pathsForResourcesOfType("png", inDirectory: "Images")
     var recipes = [Recipe]()
@@ -32,7 +33,20 @@ class CollectionViewController: UICollectionViewController {
     titleLabel.textAlignment = NSTextAlignment.Center
     titleLabel.textColor = UIColor.blackColor()
     titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
+    
+    let recognizer = UITapGestureRecognizer(target: self, action:Selector("handleTap:"))
+    recognizer.delegate = self
+    view.addGestureRecognizer(recognizer)
   }
+    
+    func handleTap(recognizer: UITapGestureRecognizer) {
+        if let url = NSURL(string: recipes[Int(collectionView!.contentOffset.x)/Int(pageWidth)].URL) {
+            let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
+            vc.delegate = self
+            
+            presentViewController(vc, animated: true, completion: nil)
+        }
+    }
     
     override func viewWillAppear(animated: Bool) {
         titleLabel.text = recipes[0].title
@@ -58,6 +72,9 @@ class CollectionViewController: UICollectionViewController {
         titleLabel.text = recipes[Int(scrollView.contentOffset.x)/Int(pageWidth)].title
     }
     
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
