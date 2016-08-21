@@ -297,7 +297,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                     self.cir.recipes = recipes
                     self.addChildViewController(self.cir)
                     self.view.addSubview(self.cir.view)
-                    self.cir.view.frame.size.height -= 100
+                    self.cir.view.frame.size.height = self.view.frame.size.height-100
                     //self.presentViewController(cir, animated: true, completion: {})
                 })
             })

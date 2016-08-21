@@ -16,6 +16,9 @@ class CollectionViewController: UICollectionViewController {
   //let images: [String] = NSBundle.mainBundle().pathsForResourcesOfType("png", inDirectory: "Images")
     var recipes = [Recipe]()
     var titleLabel: UILabel!
+    var pageWidth: Float {
+        return Float(self.collectionView!.contentSize.width/CGFloat(recipes.count+1))
+    }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -27,16 +30,15 @@ class CollectionViewController: UICollectionViewController {
     collectionView!.backgroundColor = UIColor.clearColor()
     collectionView!.backgroundView = UIView(frame: CGRect.zero)
     
+    titleLabel = UILabel(frame: CGRectMake(0, 0, view.frame.width-40, 21))
+    titleLabel.center = CGPointMake(view.frame.width/2, 384)
+    titleLabel.textAlignment = NSTextAlignment.Center
+    titleLabel.text = recipes[0].title
+    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.font = titleLabel.font.fontWithSize(18)
   }
     
     override func viewWillAppear(animated: Bool) {
-        titleLabel = UILabel(frame: CGRectMake(0, 0, view.frame.width-40, 21))
-        titleLabel.center = CGPointMake(view.frame.width/2, 384)
-        titleLabel.textAlignment = NSTextAlignment.Center
-        titleLabel.text = recipes[0].title
-        titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = titleLabel.font.fontWithSize(18)
-        
         self.view.addSubview(titleLabel)
         self.view.bringSubviewToFront(titleLabel)
     }
@@ -54,13 +56,13 @@ class CollectionViewController: UICollectionViewController {
     }
     
     override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        print("\(scrollView.contentOffset.x/252.0) to \(Int(scrollView.contentOffset.x)/252)")
-        titleLabel.text = recipes[Int(scrollView.contentOffset.x)/252].title
+        print("\(scrollView.contentOffset.x/CGFloat(pageWidth)) to \(Int(scrollView.contentOffset.x)/Int(pageWidth))")
+        titleLabel.text = recipes[Int(scrollView.contentOffset.x)/Int(pageWidth)].title
     }
     
     
     override func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        var pageWidth: Float = 252
+        
         // width + space
         var currentOffset = Float(scrollView.contentOffset.x)
         var targetOffset = Float(targetContentOffset.memory.x)
