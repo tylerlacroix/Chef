@@ -39,6 +39,16 @@ class CollectionViewController: UICollectionViewController {
   }
     
     override func viewWillAppear(animated: Bool) {
+<<<<<<< Updated upstream
+=======
+        titleLabel = UILabel(frame: CGRectMake(0, 0, view.frame.width-40, 80))
+        titleLabel.center = CGPointMake(view.frame.width/2, 384)
+        titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.text = recipes[0].title
+        titleLabel.textColor = UIColor.blackColor()
+        titleLabel.font = UIFont(name: "AvenirNext-Regular", size: 25.0)
+        
+>>>>>>> Stashed changes
         self.view.addSubview(titleLabel)
         self.view.bringSubviewToFront(titleLabel)
     }

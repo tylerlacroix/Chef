@@ -118,18 +118,20 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func handleTap(recognizer: UITapGestureRecognizer) {
         
-        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
-            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
-                (imageDataSampleBuffer, error) -> Void in
-                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                let image = UIImage(data: imageData)
-                
-                RecognizeImage(UIImagePNGRepresentation(image!)!, callback: { string in
-                    if let foodname = string {
-                        self.createLabel(foodname)
-                    }
-                    })
-                //UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
+        if (stage == 0) {
+            if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
+                stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+                    (imageDataSampleBuffer, error) -> Void in
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    let image = UIImage(data: imageData)
+                    
+                    RecognizeImage(UIImagePNGRepresentation(image!)!, callback: { string in
+                        if let foodname = string {
+                            self.createLabel(foodname)
+                        }
+                        })
+                    //UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
+                }
             }
         }
     }
@@ -284,13 +286,25 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
             
             rotateView(loadBall)
             
-            var list = [String]()
-            
-            for label in labels {
-                if let text = label.text {
-                    list.append(text)
+            let delay = 3.0 * Double(NSEC_PER_SEC)
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(time, dispatch_get_main_queue()) {
+                if (self.stage != 0) {
+                    UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                        
+                        self.findingLabel.alpha = 0.0
+                        
+                        for i in 0...(self.labels.endIndex - 1) {
+                            self.labels[i].alpha = 0.0
+                        }
+                        
+                        }, completion: nil)
+                    
+                    self.showRecipes()
+                    self.clear()
                 }
             }
+<<<<<<< Updated upstream
             
             getRecipes(list, callback: { recipes in
                 dispatch_async(dispatch_get_main_queue(),{
@@ -301,10 +315,39 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
                     //self.presentViewController(cir, animated: true, completion: {})
                 })
             })
+=======
+>>>>>>> Stashed changes
         }
         else {
             reset()
         }
+    }
+
+    func showRecipes() {
+        var list = [String]()
+        
+        for label in labels {
+            if let text = label.text {
+                list.append(text)
+            }
+        }
+        
+        getRecipes(list, callback: { recipes in
+            dispatch_async(dispatch_get_main_queue(),{
+                self.cir.recipes = recipes
+                self.addChildViewController(self.cir)
+                self.view.addSubview(self.cir.view)
+                self.cir.view.frame.size.height -= 100
+                self.cir.view.alpha = 0.0
+                
+                UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                    
+                    self.cir.view.alpha = 0.9
+                    
+                    }, completion: nil)
+                //self.presentViewController(cir, animated: true, completion: {})
+            })
+        })
     }
     
     func rotateView(sender: UILabel) {
@@ -353,8 +396,8 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
             self.cir.view.removeFromSuperview()
             self.cir.removeFromParentViewController()
             
-            for i in 0...(self.labels.endIndex - 1) {
-                self.labels[i].alpha = 0.0
+            for label in self.labels {
+                label.alpha = 0.0
             }
             
             }, completion: { Void in
