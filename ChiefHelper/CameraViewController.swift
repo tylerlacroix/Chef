@@ -71,6 +71,17 @@ class CameraViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    @IBAction func Next(sender: AnyObject) {
+        
+        getRecipes(["chicken breast", "bell pepper"], callback: { recipes in
+            var layout = CircularCollectionViewLayout()
+            layout.invalidateLayout()
+            var cir = CollectionViewController(collectionViewLayout: layout)
+            cir.recipes = recipes
+            self.presentViewController(cir, animated: true, completion: {})
+        })
+    }
     
     
     

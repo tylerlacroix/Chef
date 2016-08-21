@@ -9,5 +9,7 @@
 import UIKit
 
 class RecipeViewController: UIViewController {
-
+    override func viewDidAppear(animated: Bool) {
+        
+    }
 }
