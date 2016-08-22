@@ -117,7 +117,7 @@
 		795A72961D694DFD004AE46F /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		795A72971D694DFD004AE46F /* ThreadHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadHelper.swift; sourceTree = "<group>"; };
 		795A72981D694DFD004AE46F /* UIButton+Kingfisher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Kingfisher.swift"; sourceTree = "<group>"; };
-		C414E1611D68AF0D000DC022 /* ChiefHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChiefHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C414E1611D68AF0D000DC022 /* Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C414E1641D68AF0D000DC022 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C414E1661D68AF0D000DC022 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C414E1691D68AF0D000DC022 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		C414E1581D68AF0D000DC022 = {
 			isa = PBXGroup;
 			children = (
-				C414E1631D68AF0D000DC022 /* ChiefHelper */,
+				C414E1631D68AF0D000DC022 /* Chef */,
 				C414E1621D68AF0D000DC022 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -160,12 +160,12 @@
 		C414E1621D68AF0D000DC022 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C414E1611D68AF0D000DC022 /* ChiefHelper.app */,
+				C414E1611D68AF0D000DC022 /* Chef.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C414E1631D68AF0D000DC022 /* ChiefHelper */ = {
+		C414E1631D68AF0D000DC022 /* Chef */ = {
 			isa = PBXGroup;
 			children = (
 				C414E1641D68AF0D000DC022 /* AppDelegate.swift */,
@@ -201,7 +201,8 @@
 				795A72981D694DFD004AE46F /* UIButton+Kingfisher.swift */,
 				C47DAE4D1D694A8B0018328C /* Alamofire.xcodeproj */,
 			);
-			path = ChiefHelper;
+			name = Chef;
+			path = Chef;
 			sourceTree = "<group>";
 		};
 		C47DAE4E1D694A8B0018328C /* Products */ = {
@@ -221,9 +222,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C414E1601D68AF0D000DC022 /* ChiefHelper */ = {
+		C414E1601D68AF0D000DC022 /* Chef */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C414E1731D68AF0D000DC022 /* Build configuration list for PBXNativeTarget "ChiefHelper" */;
+			buildConfigurationList = C414E1731D68AF0D000DC022 /* Build configuration list for PBXNativeTarget "Chef" */;
 			buildPhases = (
 				C414E15D1D68AF0D000DC022 /* Sources */,
 				C414E15E1D68AF0D000DC022 /* Frameworks */,
@@ -234,9 +235,9 @@
 			);
 			dependencies = (
 			);
-			name = ChiefHelper;
-			productName = ChiefHelper;
-			productReference = C414E1611D68AF0D000DC022 /* ChiefHelper.app */;
+			name = Chef;
+			productName = Chef;
+			productReference = C414E1611D68AF0D000DC022 /* Chef.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -255,7 +256,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C414E15C1D68AF0D000DC022 /* Build configuration list for PBXProject "ChiefHelper" */;
+			buildConfigurationList = C414E15C1D68AF0D000DC022 /* Build configuration list for PBXProject "Chef" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -274,7 +275,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				C414E1601D68AF0D000DC022 /* ChiefHelper */,
+				C414E1601D68AF0D000DC022 /* Chef */,
 			);
 		};
 /* End PBXProject section */
@@ -491,12 +492,12 @@
 				DEVELOPMENT_TEAM = LNGTS35Z24;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ChiefHelper",
+					"$(PROJECT_DIR)/Chef",
 				);
-				INFOPLIST_FILE = ChiefHelper/Info.plist;
+				INFOPLIST_FILE = Chef/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tylerlacroix.ChiefHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tylerlacroix.Chef;
+				PRODUCT_NAME = Chef;
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 2.3;
 			};
@@ -511,12 +512,12 @@
 				DEVELOPMENT_TEAM = LNGTS35Z24;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/ChiefHelper",
+					"$(PROJECT_DIR)/Chef",
 				);
-				INFOPLIST_FILE = ChiefHelper/Info.plist;
+				INFOPLIST_FILE = Chef/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tylerlacroix.ChiefHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tylerlacroix.Chef;
+				PRODUCT_NAME = Chef;
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 2.3;
 			};
@@ -525,7 +526,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C414E15C1D68AF0D000DC022 /* Build configuration list for PBXProject "ChiefHelper" */ = {
+		C414E15C1D68AF0D000DC022 /* Build configuration list for PBXProject "Chef" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C414E1711D68AF0D000DC022 /* Debug */,
@@ -534,7 +535,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C414E1731D68AF0D000DC022 /* Build configuration list for PBXNativeTarget "ChiefHelper" */ = {
+		C414E1731D68AF0D000DC022 /* Build configuration list for PBXNativeTarget "Chef" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C414E1741D68AF0D000DC022 /* Debug */,

@@ -38,6 +38,7 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     var logo = UIImageView()
     var gear = UIImageView()
     var stage = 0
+    var doInit = true
     
     @IBOutlet weak var overlayCamera: UIView!
     
@@ -181,8 +182,11 @@ class CameraViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func handleTap(recognizer: UITapGestureRecognizer) {
-        
-        doneInt()
+        if doInit {
+            doneInt()
+            doInit = false
+            return
+        }
         
         if (stage == 0) {
             if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
